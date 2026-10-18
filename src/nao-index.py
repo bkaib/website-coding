@@ -29,7 +29,6 @@ import earthkit.transforms as ekt
 # No worries, xarray and dask will do that for us automatically.
 
 # %%
-
 # Load MSLP data and select North Atlantic region
 north_atlantic_box = [-80, 0, 0, 80]  # earthkit expects: [lon_min, lon_max, lat_min, lat_max]
 mslp = xr.open_mfdataset("C:/local_desktop/projects/website-coding/data/raw/ERA5/mslp/*.nc")
@@ -38,9 +37,7 @@ north_atlantic_mslp = mslp["msl"].sel(
     latitude=slice(north_atlantic_box[3], north_atlantic_box[2])
 )
 north_atlantic_mslp
-
 # %% 
-
 # Compute mean over the reference period
 climatology = north_atlantic_mslp.mean(dim="valid_time").compute()
 chart = ekp.Map(domain=north_atlantic_box)
@@ -50,4 +47,3 @@ chart.gridlines()
 chart.title("Mean of North Atlantic MSLP (Reference Period: 2015-2025)")
 chart.legend(label="{variable_name} ({units})")
 chart.show()
-
